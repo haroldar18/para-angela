@@ -1,0 +1,43 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Para ti ❤️</title><style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#03030a;color:#fff}
+body{display:flex;align-items:center;justify-content:center}
+.scene{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 50% 45%,#101044 0,#05051a 38%,#010107 78%)}
+canvas{position:absolute;inset:0;width:100%;height:100%}
+.stars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:53px 53px;opacity:.25;animation:drift 18s linear infinite}
+@keyframes drift{to{background-position:53px 53px}}
+.content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:3}
+h1{font-size:clamp(34px,9vw,72px);margin:0 0 14px;text-shadow:0 0 18px #ff39b7,0 0 45px #4c7dff}
+p{font-size:clamp(17px,4.5vw,28px);max-width:760px;line-height:1.45;margin:8px 0}
+.glow{filter:drop-shadow(0 0 12px #ff4fc3)}
+.heart{font-size:clamp(100px,30vw,230px);line-height:1;animation:pulse 1.5s ease-in-out infinite;filter:drop-shadow(0 0 25px #168cff) drop-shadow(0 0 55px #ff3db7)}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.buttons{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+button{border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:14px 30px;font-size:18px;font-weight:700;color:#fff;background:rgba(255,40,170,.18);box-shadow:0 0 18px rgba(255,45,180,.5);cursor:pointer;transition:.2s}
+button:hover{transform:scale(1.06)}
+.yes{background:linear-gradient(135deg,#ff3aa9,#ff75cf)}
+.no{background:linear-gradient(135deg,#285dff,#704cff)}
+.small{font-size:14px;opacity:.75;margin-top:28px}
+.cat{font-size:80px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.hidden{display:none!important}
+.fade{animation:fade .7s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.message{font-size:clamp(24px,6vw,46px);font-weight:800}
+.signature{margin-top:18px;font-style:italic;opacity:.9}
+</style></head><body>
+<div class="scene"><div class="stars"></div><canvas id="particles"></canvas>
+<div class="content"><div class="heart">♥</div><h1>Angela ❤️</h1><p>Hay algo que late por ti...</p><p>Y ese algo eres tú, Angela ❤️</p><p class="signature">Cada instante contigo hace mi vida más bonita.</p><p class="small">Toca la pantalla para continuar ✨</p></div></div>
+<script>
+const c=document.getElementById('particles'),x=c.getContext('2d');
+let w,h,pts=[];
+function resize(){w=c.width=innerWidth*devicePixelRatio;h=c.height=innerHeight*devicePixelRatio;x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);w=innerWidth;h=innerHeight}
+function hp(t){return [16*Math.sin(t)**3,13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t)]}
+function make(){pts=[];for(let i=0;i<950;i++){let t=Math.random()*Math.PI*2,s=Math.sqrt(Math.random())*.98;let [hx,hy]=hp(t);pts.push({x:hx*s,y:hy*s,a:Math.random()*6.28,r:1+Math.random()*2.5})}}
+function draw(){x.clearRect(0,0,w,h);let scale=Math.min(w,h)/38,cx=w/2,cy=h*.47;
+for(const p of pts){let px=cx+p.x*scale,py=cy-p.y*scale;x.fillStyle=`hsla(${205+Math.random()*35},100%,${70+Math.random()*25}%,${.35+Math.random()*.65})`;x.beginPath();x.arc(px,py,p.r,0,7);x.fill()}
+requestAnimationFrame(draw)}
+addEventListener('resize',resize);resize();make();draw();
+
+document.querySelector('.scene').addEventListener('click',()=>location.href='pregunta.html');
+</script></body></html>
